@@ -33,11 +33,11 @@ const TaskList = ({tasks, addToCompletedTasks, completedTasks, handleDelete, han
             key={index}
           >
             <div
-              className="flex items-center gap-3 sm:gap-7 w-full"
+              className="flex items-center gap-3 sm:gap-7 w-full min-w-0"
             >
                 <input 
                   type="checkbox" 
-                  className="size-4" 
+                  className="w-4 h-4 min-w-[16px] min-h-[16px]" 
                   checked={task.isChecked}
                   onChange={() => handleChecked(index)}
                 />
@@ -50,7 +50,7 @@ const TaskList = ({tasks, addToCompletedTasks, completedTasks, handleDelete, han
                   onChange={(e) => setEditText(e.target.value)}
                 />
                 :
-                <p className="text-white/60"
+                <p className="text-white/60 truncate whitespace-nowrap overflow-ellipsis"
                   onClick={() => handleChecked(index)}>
                   {task.text}
                 </p> 
@@ -80,19 +80,19 @@ const TaskList = ({tasks, addToCompletedTasks, completedTasks, handleDelete, han
         ))}
         {completedTasks.map((task, index) => (
           <li 
-            className={`flex items-center justify-between py-3 px-5 bg-base-100/70 cursor-pointer ${index != completedTasks.length - 1 ? "border-b border-white/5": ''} `}
+            className={`flex items-center justify-between py-3 sm:px-5 px-2 bg-base-100/60 cursor-pointer ${index != completedTasks.length - 1 ? "border-b border-white/5": ''} `}
             key={index}
           >
             <div
-              className="flex items-center gap-7 w-full"
+              className="flex items-center gap-7 w-full min-w-0"
             >
               <input 
                 type="checkbox" 
-                className="size-4" 
+                className="w-4 h-4 min-w-[16px] min-h-[16px]" 
                 checked={true}
                 disabled
               />
-              <p className="text-white/30 line-through">
+              <p className="text-white/30 line-through truncate whitespace-nowrap overflow-hidden">
                 {task.text}
               </p>
             </div>
