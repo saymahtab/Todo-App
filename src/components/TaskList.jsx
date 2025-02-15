@@ -84,7 +84,7 @@ const TaskList = ({tasks, addToCompletedTasks, completedTasks, handleDelete, han
             key={index}
           >
             <div
-              className="flex items-center gap-7 w-full min-w-0"
+              className="flex items-center gap-3 sm:gap-7 w-full min-w-0"
             >
               <input 
                 type="checkbox" 
