@@ -1,38 +1,37 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todoReducer from "../features/todo/todoSlice";
 
-const loadState = () => {
+const loadTodosFromLocalStorage = () => {
   try {
-    const prevState = localStorage.getItem("todos");
-    return prevState ? JSON.parse(prevState) : [];
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
   } catch (error) {
-    console.error("Error loading state:", error);
+    console.error("Error parsing todos from localStorage:", error);
     return [];
   }
 };
 
-const saveState = (state) => {
-  try {
-    const prevState = JSON.stringify(state);
-    localStorage.setItem("todos", prevState);
-  } catch (error) {
-    console.error("Error saving state:", error);
-  }
+const saveTodosToLocalStorage = (todos) => {
+  localStorage.setItem("todos", JSON.stringify(todos));
 };
 
 const preloadedState = {
-  todos: loadState(), 
+  todo: {
+    todos: loadTodosFromLocalStorage(),
+    isLoading: false,
+    isError: false,
+  },
 };
 
 const store = configureStore({
   reducer: {
-    todos: todoReducer,
+    todo: todoReducer,
   },
-  preloadedState, 
+  preloadedState,
 });
 
 store.subscribe(() => {
-  saveState(store.getState().todos);
+  saveTodosToLocalStorage(store.getState().todo.todos);
 });
 
 export default store;

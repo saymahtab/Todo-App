@@ -7,7 +7,7 @@ const TodoItems = ({ task, taskIndex }) => {
   const [editTodoId, setEditTodoId] = useState(null);
   const [editText, setEditText] = useState("");
 
-  const tasks = useSelector((state) => state.todos);
+  const tasks = useSelector((state) => state.todo.todos);
   const dispatch = useDispatch();
 
   const handleEdit = (id) => {
@@ -51,11 +51,11 @@ const TodoItems = ({ task, taskIndex }) => {
           />
         ) : !task.isChecked ? (
           <p onClick={() => handleCheckbox(task.id)} className="text-white/60 truncate whitespace-nowrap overflow-ellipsis">
-            {task.text}
+            {task.title}
           </p>
         ) : (
           <p onClick={() => handleCheckbox(task.id)} className="text-white/30 line-through truncate whitespace-nowrap overflow-hidden">
-            {task.text}
+            {task.title}
           </p>
         )}
       </div>

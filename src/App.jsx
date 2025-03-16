@@ -4,23 +4,6 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 const App = () => {
-  // const [tasks, setTasks] = useState(() => {
-  //   const storedTasks = localStorage.getItem("tasks");
-  //   return storedTasks ? JSON.parse(storedTasks) : [];
-  // });
-
-  // const [completedTasks, setCompletedTasks] = useState(() => {
-  //   const storedCompletedTasks = localStorage.getItem("completedTasks");
-  //   return storedCompletedTasks ? JSON.parse(storedCompletedTasks) : [];
-  // });
-
-  // useEffect(() => {
-  //     localStorage.setItem("tasks", JSON.stringify(tasks));
-  // }, [tasks]);
-
-  // useEffect(() => {
-  //     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
-  // }, [completedTasks]);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
