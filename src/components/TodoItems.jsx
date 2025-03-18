@@ -10,29 +10,29 @@ const TodoItems = ({ task, taskIndex }) => {
   const tasks = useSelector((state) => state.todo.todos);
   const dispatch = useDispatch();
 
-  const handleEdit = (id) => {
-    setEditTodoId(id);
-    setEditText(task.text);
-  };
-  const handleSave = (id) => {
-    if (editText.trim()) {
-      dispatch(EditTodo({ id, text: editText }));
-      setEditTodoId(null);
-    }
-  };
-  const handleCheckbox = (id) => {
-    dispatch(Toggle(id));
-  };
+    const handleEdit = (id) => {
+      setEditTodoId(id);
+      setEditText(task.title);
+    };
+
+    const handleSave = (id) => {
+      if (editText.trim()) {
+        dispatch(EditTodo({ id, title: editText }));
+        setEditTodoId(null);
+      }
+    };
+    const handleCheckbox = (id) => {
+      dispatch(Toggle(id));
+    };
 
   return (
     <li
+      key={task.id}
       className={`flex items-center justify-between py-3 sm:px-5 px-2 hover:bg-base-300 cursor-pointer ${
         taskIndex != tasks.length - 1 ? "border-b border-white/5" : ""
       } `}
     >
-      <div
-        className="flex items-center gap-3 sm:gap-7 w-full min-w-0"
-      >
+      <div className="flex items-center gap-3 sm:gap-7 w-full min-w-0">
         <input
           type="checkbox"
           className="w-4 h-4 min-w-[16px] min-h-[16px]"
@@ -50,11 +50,17 @@ const TodoItems = ({ task, taskIndex }) => {
             onChange={(e) => setEditText(e.target.value)}
           />
         ) : !task.isChecked ? (
-          <p onClick={() => handleCheckbox(task.id)} className="text-white/60 truncate whitespace-nowrap overflow-ellipsis">
+          <p
+            onClick={() => handleCheckbox(task.id)}
+            className="text-white/60 truncate whitespace-nowrap overflow-ellipsis"
+          >
             {task.title}
           </p>
         ) : (
-          <p onClick={() => handleCheckbox(task.id)} className="text-white/30 line-through truncate whitespace-nowrap overflow-hidden">
+          <p
+            onClick={() => handleCheckbox(task.id)}
+            className="text-white/30 line-through truncate whitespace-nowrap overflow-hidden"
+          >
             {task.title}
           </p>
         )}

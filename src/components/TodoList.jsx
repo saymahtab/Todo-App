@@ -6,7 +6,7 @@ import { useMemo } from "react";
 const TodoList = () => {
   const todos = useSelector((state) => state.todo.todos);
   
-  const tasks = useMemo(() => {
+  const memoizedTodos = useMemo(() => {
     return [...todos].sort((a, b) => {
       if (b.isChecked === a.isChecked) {
         return new Date(b.time || 0) - new Date(a.time || 0);
@@ -32,7 +32,7 @@ const TodoList = () => {
         >
           Load Todos
         </button>
-        {tasks.map((task, index) => (
+        {memoizedTodos.map((task, index) => (
           <TodoItems key={task.id} task={task} taskIndex={index} />
         ))}
       </ul>

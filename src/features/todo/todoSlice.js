@@ -6,8 +6,12 @@ export const fetchTodos = createAsyncThunk("fetchTodos", async () => {
   const response = await axios.get(
     "https://jsonplaceholder.typicode.com/todos?_limit=5"
   );
-  console.log(response.data)
-  return response.data;
+  return response.data.map((todo) => ({
+    id: uuid(),
+    title: todo.title,
+    isChecked: false,
+    time: Date.now(),
+  }));
 });
 
 const todoSlice = createSlice({
@@ -20,19 +24,20 @@ const todoSlice = createSlice({
   reducers: {
     AddTodo: (state, action) => {
       state.todos.push({
-        title: action.payload,
-        time: Date.now(),
         id: uuid(),
+        title: action.payload,
         isChecked: false,
+        time: Date.now(),
       });
     },
     DeleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     EditTodo: (state, action) => {
-      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+      const { title, id } = action.payload;
+      const todo = state.todos.find((todo) => todo.id === id);
       if (todo) {
-        todo.title = action.payload.title;
+        todo.title = title;
         todo.time = Date.now();
       }
     },
@@ -49,7 +54,16 @@ const todoSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
-        (state.isLoading = false), (state.todos = action.payload);
+        state.isLoading = false;
+        state.todos = [
+          ...state.todos,
+          ...action.payload.map((todo) => ({
+            id: todo.id,
+            title: todo.title,
+            time: Date.now(),
+            isChecked: false,
+          })),
+        ];
       })
       .addCase(fetchTodos.rejected, (state, action) => [
         console.log("Error is Fetching Todos: ", action.error),
